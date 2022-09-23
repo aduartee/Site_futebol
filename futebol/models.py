@@ -2,8 +2,10 @@ from signal import default_int_handler
 from django.db import models
 from datetime import datetime
 from statistics import mode
+from pessoas.models import Pessoa
 
 class Futebol(models.Model):
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
     nome_time = models.CharField(max_length=200)
     informacoes = models.TextField()
     ano_criacao = models.TextField()
