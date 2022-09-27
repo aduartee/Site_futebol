@@ -6,7 +6,7 @@ from .models import Futebol
 
 def index(request):
     
-    futebol = Futebol.objects.filter(publicacao=True)
+    futebol = Futebol.objects.order_by('ano_criacao').filter(publicacao=True)
         
     dados = {
        'futebol' : futebol
