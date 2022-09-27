@@ -13,3 +13,4 @@ class Futebol(models.Model):
     historio = models.CharField(max_length=100)
     divisao = models.CharField(max_length=50)
     ano_criacao = models.DateTimeField(default=datetime.now, blank=True)
+    publicacao = models.BooleanField(default=False, )
