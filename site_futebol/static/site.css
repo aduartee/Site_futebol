@@ -675,7 +675,7 @@ textarea:focus {
   padding-bottom: 50px; }
 
 .single-best-receipe-area {
-  position: relative;
+  position: center;
   z-index: 1; }
   .single-best-receipe-area img {
     border-bottom: 3px solid #40ba37; }

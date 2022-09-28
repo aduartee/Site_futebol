@@ -36,8 +36,12 @@
                 <!-- Single Best Receipe Area -->
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="single-best-receipe-area mb-30">
+                        {% if time.foto_time == '' %}
                         <img src="{% static 'img/bg-img/foto_receita.png' %}" alt="">
-                        <div class="receipe-content">
+                        {% else %}
+                        <img src="{{ time.foto_time.url }}" alt="">
+                        {% endif %}
+                        <div class="receip e-content">
                             <a href="{% url 'receita' time.id %}">
                                 <h5>{{ time.nome_time }}</h5>
                             </a>
