@@ -8,6 +8,7 @@
         <img src="{% static 'img/core-img/pizza.png' %}" alt="">
     </div>
 
+    {% include 'partials/_busca.html' %}
 
    {% include 'partials/_menu.html' %}
 
@@ -32,14 +33,15 @@
                         </div>
                         {% endfor %}
                         {% else %}
+                        <div class="col-12 col-sm-6 col-lg-4">
+                            <p>Time não encontrado :(</p>
+                        </div>
                         {% endif %}
                     </div>
                 </div>
             </section>
                 
     <!-- ##### Best Receipe Area End ##### -->
-
-    {% include 'partials/_busca.html' %}
 
     {% include 'partials/_footer.html' %}
 
