@@ -9,7 +9,23 @@
     </div>
 
 
+<<<<<<< HEAD
    {% include 'partials/_menu.html' %}
+=======
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="{% url 'buscar' %}">
+                        <input type="text" name="buscar" placeholder="O que está procurando...">
+                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   {% include 'partials/menu.html' %}
+>>>>>>> 9d91839b2d8f8168dc64c896d07d46d91d440117
 
     <!-- ##### Best Receipe Area Start ##### -->
     <section class="best-receipe-area">
