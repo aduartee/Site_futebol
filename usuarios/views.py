@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from contextlib import redirect_stderr
+from time import time
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import auth
+from futebol.models import Futebol
 
 def cadastro(request):
     if request.method == 'POST':
@@ -51,9 +54,15 @@ def login(request):
 
 def dashboard(request):
     if request.user.is_authenticated:
-        return render(request, 'usuarios/dashboard.html')
+        id = request.user.id
+        times = Futebol.objects.order_by('-ano_criacao').filter(pessoa=id)
+        
+        dados = {
+            'futebol' : times
+        }
+        return render(request, 'usuarios/dashboard.html', dados)
     else:
-        return render('index')
+        return render('index')  
 
 
 def logout(request):
@@ -61,5 +70,20 @@ def logout(request):
     return redirect('index') 
 
 def cria(request):
-    return render(request, 'usuarios/criar.html')
- 
+    if request.method == 'POST':
+        nome_time = request.POST['nome_time']
+        historia = request.POST['historio']
+        informacoes = request.POST['informacoes']
+        ano_criacao = request.POST['ano_criacao']
+        numero_titulos = request.POST['numero_titulos']
+        divisao = request.POST['divisao']
+        foto_time = request.FILES['foto_time']
+        user = get_object_or_404(User, pk=request.user.id)
+        time = Futebol.objects.create(pessoa=user, nome_time=nome_time, historio=historia, informacoes=informacoes, ano_criacao=ano_criacao, numero_titulos=numero_titulos
+                                      ,divisao=divisao, foto_time=foto_time)
+        time.save()
+        return redirect('dashboard')
+    else:
+       return render(request, 'usuarios/criar.html')
+
+    

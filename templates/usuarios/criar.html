@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div id="preloader">
+   <i class="circle-preloader"></i>
+   <img src="{% static 'img/core-img/pizza.png' %}" alt="">
+</div>
+ 
+{% include 'partials/_busca.html' %}
+ 
+{% include 'partials/_menu.html' %}
+ 
+<div class="contact-area section-padding-0-80">
+   <div class="container">
+       <div class="row">
+           <div class="col-12">
+               <div class="section-heading">
+                   <h3>Crie seu time, {{ user.username }}! </h3>
+               </div>
+           </div>
+       </div>
+ 
+       <div class="row">
+           <div class="col-12">
+           <p>Todos os campos são obrigatórios</p>
+               <div class="contact-form-area">
+                   <form action="{% url 'criar' %}" method="post" enctype="multipart/form-data">
+                           {% csrf_token %}
+                       <div class="row">
+                           <div class="col-12 col-lg-12">
+                               <label for="nome_time"><b>Nome do time</b></label>
+                               <input type="text" id="nome_time" class="form-control" name="nome_time" placeholder="Ex. Flamengo" required>
+                           </div>
+                           <div class="col-12">
+                               <label for="file"><b>Historia do time</b></label>
+                               <textarea class="form-control" name="historio" cols="30" rows="10" placeholder="Ex. Flamengo é um clube do povo..." required></textarea>
+                           </div>
+                           <div class="col-12">
+                               <label for="file"><b>Informações do time</b></label>
+                               <textarea class="form-control" name="informacoes" cols="30" rows="10" placeholder="Ex. Melhor time do mundo!" required></textarea>
+                           </div>
+                           <div class="col-12 col-lg-3">
+                               <label for="file"><b>Ano de criação</b></label>
+                               <input type="date" class="form-control" name="ano_criacao" placeholder="Ex. 1895" required>
+                           </div>
+                           <div class="col-12 col-lg-3">
+                               <label for="file"><b>Numero de titulos</b></label>
+                               <input type="number" class="form-control" name="numero_titulos" placeholder="Ex. 137" required>
+                           </div>
+                           <div class="col-12 col-lg-3">
+                               <label for="file"><b>Divisao atual</b></label>
+                               <input type="text" class="form-control" name="divisao" placeholder="Ex. Serie A" required>
+                           </div>
+                           <div class="col-12 col-lg-3">
+                               <label for="file"><b>Logo</b></label>
+                               <input type="file" class="form-control" name="foto_time" required>
+                           </div>
+                           <div class="col-12 text-center">
+                               <button class="btn delicious-btn mt-30" type="submit">Criar seu time</button>
+                           </div>
+                       </div>
+                   </form>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+ 
+{% include 'partials/_footer.html' %}
+{% endblock %}
