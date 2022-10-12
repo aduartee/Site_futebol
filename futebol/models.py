@@ -16,7 +16,7 @@ class Futebol(models.Model):
     divisao = models.CharField(max_length=50)
     foto_time = models.ImageField(upload_to='fotos/%d/%m/%Y', blank=True)
     ano_criacao = models.DateTimeField(default=datetime.now, blank=True)
-    publicacao = models.BooleanField(default=False, )
+    publicacao = models.BooleanField(default=False,)
 
     def __str__(self):
         return self.nome_time

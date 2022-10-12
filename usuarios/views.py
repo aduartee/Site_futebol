@@ -3,8 +3,10 @@ from time import time
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib import auth
+from django.contrib import auth, messages
 from futebol.models import Futebol
+
+
 
 def cadastro(request):
     if request.method == 'POST':
@@ -12,25 +14,30 @@ def cadastro(request):
         email = request.POST['email']
         senha = request.POST['password']
         senha2 = request.POST['password2']
-        if not name.strip():
-            print('Nome não pode ficar em branco')
+        
+        if campo_vazio(name):
+            messages.error(request, 'Nome não pode ficar em branco') 
             return redirect('cadastro')
         
-        if not email.strip:
-            print('Email não pode fica vazio')
+        if campo_vazio(email):
+            messages.error(request, 'Email não pode ficar vazio')
             return redirect('cadastro')
         
-        if senha != senha2: 
-            print('Senhas devem ser iguais')
+        if campo_diferente(senha, senha2): 
+            messages.error(request, 'As senhas devem ser iguais!!')
             return redirect('cadastro')
         
         if User.objects.filter(email=email).exists():
-            print ('Usuario já cadastrado')
+            messages.error(request, 'Usuario já cadastrado')
+            return redirect('cadastro')
+        
+        if User.objects.filter(username=name).exists():
+            messages.error(request, 'Usuario já cadastrado')
             return redirect('cadastro')
         
         user = User.objects.create_user(username=name, email=email,password=senha)
         user.save()
-        print('Usuario cadastrado com sucesso: ', name, email, senha, senha2 )
+        messages.success(request, 'Usuario cadastrado com sucesso')
         return redirect('login')
     else:
         return render(request, 'usuarios/cadastro.html')
@@ -40,7 +47,7 @@ def login(request):
         email = request.POST['email']
         senha = request.POST['senha']
         if email == '' or senha == '': 
-            print('Usuario não podem estar vazios')
+            messages.error(request,'Usuario e senha não podem estar vazios')
             return redirect('login')
         if User.objects.filter(email=email).exists():
             nome = User.objects.filter(email=email).values_list('username', flat=True).get()
@@ -62,7 +69,7 @@ def dashboard(request):
         }
         return render(request, 'usuarios/dashboard.html', dados)
     else:
-        return render('index')  
+        return redirect('index')  
 
 
 def logout(request):
@@ -86,4 +93,9 @@ def cria(request):
     else:
        return render(request, 'usuarios/criar.html')
 
+
+def campo_vazio(campo):
+    return not campo.strip()
     
+def campo_diferente(campo1, campo2):
+    return campo1 != campo2
